@@ -1,66 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f614518b-23d2-49a6-b05f-f145c06a7f2b" name="Default" comment="test">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-1/A.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-1/B.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-1/C.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-1/D.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-1/build.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-1/clean.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-1/uml-parser-test1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-1/uml-parser-test1.yuml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/A1.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/A2.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/B1.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/B2.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/C1.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/C2.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/P.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/build.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/clean.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/uml-ball-n-socket-test2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/uml-parser-test2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-2/uml-parser-test2.yuml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-3/ClassA.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-3/ClassB.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-3/build.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-3/clean.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-3/uml-parser-test3.asta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-3/uml-parser-test3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/ConcreteObserver.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/ConcreteSubject.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/Observer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/Optimist.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/Pessimist.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/Subject.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/TheEconomy.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/build.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/clean.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/uml-parser-test-4-icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/uml-parser-test-4.asta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-4/uml-parser-test-4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/Component.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/ConcreteComponent.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/ConcreteDecoratorA.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/ConcreteDecoratorB.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/Decorator.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/Tester.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/build.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/clean.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/uml-parser-test-5.asta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-parser-test-5/uml-parser-test-5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/ConcreteObserver.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/ConcreteSubject.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/Main.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/Observer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/Optimist.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/Pessimist.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/Subject.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uml-sequence-test/TheEconomy.java" afterPath="" />
+    <list default="true" id="f614518b-23d2-49a6-b05f-f145c06a7f2b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/test.java" afterPath="$PROJECT_DIR$/src/main/java/test.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -613,7 +555,14 @@
       <option name="project" value="LOCAL" />
       <updated>1487889977320</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="move test files out of project">
+      <created>1487892751077</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1487892751078</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -623,7 +572,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32934928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -657,7 +606,8 @@
     <MESSAGE value="updated maven for JavaParser" />
     <MESSAGE value="test" />
     <MESSAGE value="sync with window desktop" />
-    <option name="LAST_COMMIT_MESSAGE" value="sync with window desktop" />
+    <MESSAGE value="move test files out of project" />
+    <option name="LAST_COMMIT_MESSAGE" value="move test files out of project" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
