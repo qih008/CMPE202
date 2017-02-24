@@ -1,2 +1,14 @@
 .Personal-Project/.idea/
+lib
+bin
+.manager
+target
+.settings
+*~
+/target
+.project
+.classpath
+.idea/
+*.iml
+
 
