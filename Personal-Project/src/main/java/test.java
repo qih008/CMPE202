@@ -18,7 +18,7 @@ public class test {
 
     public static void main(String[] args) throws Exception {
         // creates an input stream for the file to be parsed
-        FileInputStream in = new FileInputStream("C:\\Users\\hq199_000\\Desktop\\CMPE202\\Personal-Project\\src\\main\\java\\A.java");
+        FileInputStream in = new FileInputStream("/Users/qing/Desktop/CMPE202/Personal-Project/src/main/java/A.java");
 
         // parse the file
         CompilationUnit cu = JavaParser.parse(in);
