@@ -19,8 +19,8 @@ class UMLOptions {}
  *
  */
 class A{
-    public int x;
-    public int[] y;
+    private int x;
+    private int[] y;
 }
 
 class B {}
