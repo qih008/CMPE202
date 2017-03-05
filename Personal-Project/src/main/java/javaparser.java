@@ -1,5 +1,5 @@
 /**
- * Created by hq199_000 on 2017/2/23.
+ * Created by qhuang on 3/4/17.
  */
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseException;
@@ -14,7 +14,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
-public class test {
+
+public class javaparser {
 
     public static void main(String[] args) throws Exception {
         // creates an input stream for the file to be parsed
@@ -54,5 +55,4 @@ public class test {
             System.out.println(n.getName());
         }
     }
-
 }

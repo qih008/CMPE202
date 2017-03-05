@@ -17,7 +17,7 @@ import java.io.FileInputStream;
 public class MethodChanger {
     public static void main(String[] args) throws Exception {
         // parse a file
-        CompilationUnit cu = JavaParser.parse(new File("C:\\Users\\hq199_000\\Desktop\\CMPE202\\Personal-Project\\src\\main\\java\\Hello1.java"));
+        CompilationUnit cu = JavaParser.parse(new File("/Users/qing/Desktop/CMPE202/Personal-Project/src/main/java/testcase1.java"));
 
         // visit and change the methods names and parameters
         new MethodChangerVisitor().visit(cu, null);

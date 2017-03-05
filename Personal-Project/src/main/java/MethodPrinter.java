@@ -13,7 +13,7 @@ import java.io.FileInputStream;
 public class MethodPrinter {
     public static void main(String[] args) throws Exception {
         // creates an input stream for the file to be parsed
-        FileInputStream in = new FileInputStream("C:\\Users\\hq199_000\\Desktop\\CMPE202\\Personal-Project\\src\\main\\java\\Hello1.java");
+        FileInputStream in = new FileInputStream("/Users/qing/Desktop/CMPE202/Personal-Project/src/main/java/testcase1.java");
 
         // parse it
         CompilationUnit cu = JavaParser.parse(in);

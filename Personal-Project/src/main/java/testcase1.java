@@ -23,10 +23,10 @@ class A{
     private int[] y;
 }
 
-class B {}
+// class B {}
 
-class C {}
+// class C {}
 
-class D {}
+// class D {}
 
 
