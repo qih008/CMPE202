@@ -19,7 +19,7 @@ public class javaparser {
 
     public static void main(String[] args) throws Exception {
         // creates an input stream for the file to be parsed
-        FileInputStream in = new FileInputStream("/Users/qing/Desktop/CMPE202/Personal-Project/src/main/java/testcase1.java");
+        FileInputStream in = new FileInputStream("/Users/qing/Desktop/CMPE202/Personal-Project/src/main/java/Hello1.java");
 
         // parse the file
         CompilationUnit cu = JavaParser.parse(in);
@@ -36,14 +36,13 @@ public class javaparser {
                 for (BodyDeclaration member : members) {
                     //Check just members that are FieldDeclarations
                     FieldDeclaration field = (FieldDeclaration) member;
-                    //Print the field's class typr
+                    //Print the field's class type
                     System.out.println(field.getModifiers());
                     //Print the field's name
                     System.out.println(field.getVariables().get(0).getType()+" "+field.getVariables().get(0).getName());
                 }
             }
         }
-
     }
 
     /*
