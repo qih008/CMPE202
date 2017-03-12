@@ -10,7 +10,7 @@
  * @hidden
  */
 
-class UMLOptions {}
+//class UMLOptions {}
 
 /**
  * @assoc "" - "\n\n *" B
