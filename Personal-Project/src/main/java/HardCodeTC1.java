@@ -10,23 +10,22 @@
  * @hidden
  */
 
-//class UMLOptions {}
+class UMLOptions {}
 
 /**
- * @assoc "" - "\n\n *" B
- * @assoc "" - "\n\n 1" C
- * @assoc "" - "\n\n 0..*" D
- *
+ * @assoc "" - "\n\n *" TC1B
+ * @assoc "" - "\n\n 1" TC1C
+ * @assoc "" - "\n\n 0..*" TC1D
  */
-class A{
+class TC1A{
     private int x;
     private int[] y;
 }
 
-// class B {}
+class TC1B {}
 
-// class C {}
+class TC1C {}
 
-// class D {}
+class TC1D {}
 
 

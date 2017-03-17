@@ -9,7 +9,7 @@
  * @hidden
  */
 
-class UMLOptions {}
+//class UMLOptions {}
 
 class TC3A{
     public String message;
