@@ -7,19 +7,33 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 
-import java.beans.ParameterDescriptor;
 import java.io.*;
 import java.util.List;
 
 
 public class javaparser {
 
-    public static void main(String[] args) throws Exception {
+    private StringBuilder sb = new StringBuilder();      // store intermediate code
+
+
+    public javaparser(String path, String filename){
+
+        // init umlgraph format
+        sb.append("/**\n" +
+                " * @opt attributes\n" +
+                " * @opt operations\n" +
+                " * @opt visibility\n" +
+                " * @opt types\n" +
+                " * @hidden\n" +
+                " */\n" +
+                "class UMLOptions {}\n");
+
+
         // creates an input stream for the file to be parsed
         //FileInputStream in = new FileInputStream("/Users/qing/Desktop/CMPE202/Tests/uml-parser-test-1");
-        File dir = new File("/Users/qing/Desktop/CMPE202/Tests/uml-parser-test-1");
+        File dir = new File(path);
 
         File[] files = dir.listFiles(new FilenameFilter() {
             //@Override
@@ -33,36 +47,31 @@ public class javaparser {
 
         for (File f : files) {
             // parse the file
-            CompilationUnit cu = JavaParser.parse(f);
-
-
-            // prints the changed compilation unit
-            //System.out.println(cu);
-
-            new ClassVisitor().visit(cu, null);
-
-            for (TypeDeclaration typeDec : cu.getTypes()) {
-                List<BodyDeclaration> members = typeDec.getMembers();
-                if (members != null) {
-                    for (BodyDeclaration member : members) {
-                        //Check just members that are FieldDeclarations
-                        FieldDeclaration field = (FieldDeclaration) member;
-                        //Print the field's class type
-                        System.out.println(field.getModifiers());
-                        //Print the field's name
-                        System.out.println(field.getVariables().get(0).getType() + " " + field.getVariables().get(0).getName());
+            try {
+                CompilationUnit cu = JavaParser.parse(f);
+                List<Node> nodes = cu.getChildNodes();
+                if(nodes != null){
+                    for(Node node : nodes){
+                        if (node instanceof ClassOrInterfaceDeclaration) {
+                            System.out.println(((ClassOrInterfaceDeclaration) node).getName());
+                            List<ClassOrInterfaceType> extendLists = ((ClassOrInterfaceDeclaration) node).getExtendedTypes();
+                            if(extendLists != null) {
+                                for (ClassOrInterfaceType classtype : extendLists) {
+                                    System.out.println(((ClassOrInterfaceDeclaration) node).getName()+" extends " + classtype);
+                                }
+                                //classDiagramSB.append("}\n");
+                            }
+                        }
                     }
                 }
+
+                System.out.println("---------------------------");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
+
+        System.out.println(sb.toString());
     }
-    /*
-            * Simple visitor implementation for visiting MethodDeclaration nodes.
-     */
-    private static class ClassVisitor extends VoidVisitorAdapter<Void> {
-        @Override
-        public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-            System.out.println(n.getName());
-        }
-    }
+
 }

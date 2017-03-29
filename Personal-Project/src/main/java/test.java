@@ -18,7 +18,7 @@ public class test {
 
     public static void main(String[] args) throws Exception {
         // creates an input stream for the file to be parsed
-        FileInputStream in = new FileInputStream("/Users/qing/Desktop/CMPE202/Personal-Project/src/main/java/testcase1.java");
+        FileInputStream in = new FileInputStream("/Users/qing/Desktop/CMPE202/Tests/uml-parser-test-3/ClassB.java");
 
         // parse the file
         CompilationUnit cu = JavaParser.parse(in);
