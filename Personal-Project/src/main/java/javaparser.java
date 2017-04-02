@@ -53,18 +53,24 @@ public class javaparser {
                 if(nodes != null){
                     for(Node node : nodes){
                         if (node instanceof ClassOrInterfaceDeclaration) {
-                            System.out.println(((ClassOrInterfaceDeclaration) node).getName());
+                            System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName());
+                            List<Node> childNodes = node.getChildNodes();
+                            int temp = 1;
+                            for(Node child : childNodes){
+                                System.out.println(""+ temp++ +" "+ child);
+
+                            }
+
+
                             List<ClassOrInterfaceType> extendLists = ((ClassOrInterfaceDeclaration) node).getExtendedTypes();
                             if(extendLists != null) {
                                 for (ClassOrInterfaceType classtype : extendLists) {
                                     System.out.println(((ClassOrInterfaceDeclaration) node).getName()+" extends " + classtype);
                                 }
-                                //classDiagramSB.append("}\n");
                             }
                         }
                     }
                 }
-
                 System.out.println("---------------------------");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
