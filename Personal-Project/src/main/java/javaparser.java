@@ -53,21 +53,48 @@ public class javaparser {
                 if(nodes != null){
                     for(Node node : nodes){
                         if (node instanceof ClassOrInterfaceDeclaration) {
-                            System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName());
+
+                            int relation_flat = 0;
+
+                            // check extension
+                            List<ClassOrInterfaceType> extendeds = ((ClassOrInterfaceDeclaration) node).getExtendedTypes();
+                            if(extendeds != null) {
+                                for (ClassOrInterfaceType classtype : extendeds) {
+                                    System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName()+" extends " + classtype);
+                                    relation_flat = 1;
+                                }
+                            }
+
+                            // check implementation
+                            List<ClassOrInterfaceType> implementeds = ((ClassOrInterfaceDeclaration) node).getImplementedTypes();
+                            if(implementeds != null) {
+                                for (ClassOrInterfaceType classtype : implementeds) {
+                                    System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName()+" implements " + classtype);
+                                    relation_flat = 1;
+                                }
+                            }
+
+                            if(relation_flat == 0)
+                                System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName());
+
                             List<Node> childNodes = node.getChildNodes();
                             int temp = 1;
                             for(Node child : childNodes){
-                                System.out.println(""+ temp++ +" "+ child);
+                                //System.out.println(""+ temp++ +" "+ child);
+                                if(child instanceof FieldDeclaration){     //check params, methods, constructor
 
-                            }
-
-
-                            List<ClassOrInterfaceType> extendLists = ((ClassOrInterfaceDeclaration) node).getExtendedTypes();
-                            if(extendLists != null) {
-                                for (ClassOrInterfaceType classtype : extendLists) {
-                                    System.out.println(((ClassOrInterfaceDeclaration) node).getName()+" extends " + classtype);
                                 }
+                                else if(child instanceof MethodDeclaration){
+
+                                }
+                                else if(child instanceof ConstructorDeclaration){
+
+                                }
+
                             }
+
+
+
                         }
                     }
                 }
