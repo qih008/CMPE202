@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ "$#" -ne 2 ] || ! [ -d "$1" ]; then
   echo "Usage: umlparser <source folder> <output file name>"
-  echo "Example: umlparser /uml-parser-test-3 output.png"
+  echo "Example: umlparser uml-parser-test-3 output.png"
 fi
 
 IN="$1"
