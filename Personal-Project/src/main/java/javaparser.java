@@ -11,12 +11,15 @@ import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 
 import java.io.*;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 
 public class javaparser {
 
     private StringBuilder sb = new StringBuilder();      // store intermediate code
+    private HashSet<String> hs = new HashSet<String>();
 
 
     public javaparser(String path) throws IOException {
@@ -51,52 +54,48 @@ public class javaparser {
             try {
                 CompilationUnit cu = JavaParser.parse(f);
                 List<Node> nodes = cu.getChildNodes();
-                if(nodes != null){
-                    for(Node node : nodes){
+                if (nodes != null) {
+                    for (Node node : nodes) {
                         if (node instanceof ClassOrInterfaceDeclaration) {
 
                             int relation_flat = 0;
 
                             // check extension
                             List<ClassOrInterfaceType> extendeds = ((ClassOrInterfaceDeclaration) node).getExtendedTypes();
-                            if(extendeds != null) {
+                            if (extendeds != null) {
                                 for (ClassOrInterfaceType classtype : extendeds) {
                                     //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName()+" extends " + classtype);
-                                    sb.append("class "+((ClassOrInterfaceDeclaration) node).getName() + " extends " + classtype + "{\n");
+                                    sb.append("class " + ((ClassOrInterfaceDeclaration) node).getName() + " extends " + classtype + "{\n");
                                     relation_flat = 1;
                                 }
                             }
 
                             // check implementation
                             List<ClassOrInterfaceType> implementeds = ((ClassOrInterfaceDeclaration) node).getImplementedTypes();
-                            if(implementeds != null) {
+                            if (implementeds != null) {
                                 for (ClassOrInterfaceType classtype : implementeds) {
                                     //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName()+" implements " + classtype);
-                                    sb.append("class "+((ClassOrInterfaceDeclaration) node).getName()+" implements " + classtype + "{\n");
+                                    sb.append("class " + ((ClassOrInterfaceDeclaration) node).getName() + " implements " + classtype + "{\n");
                                     relation_flat = 1;
                                 }
                             }
 
-                            if(relation_flat == 0)
+                            if (relation_flat == 0)
                                 //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName());
-                                sb.append("class "+((ClassOrInterfaceDeclaration) node).getName() + "{\n");
+                                sb.append("class " + ((ClassOrInterfaceDeclaration) node).getName() + "{\n");
 
                             List<Node> childNodes = node.getChildNodes();
                             //int temp = 1;
-                            for(Node child : childNodes){
+                            for (Node child : childNodes) {
                                 //System.out.println(""+ temp++ +" "+ child);
-                                if(child instanceof FieldDeclaration){                    //check params, methods, constructor
-                                    if(isPublic(child))
+                                if (child instanceof FieldDeclaration) {                    //check params, methods
+                                    if (isPublic(child))
                                         addPublicParam((FieldDeclaration) child);
-                                    else if(isPrivate(child))
+                                    else if (isPrivate(child))
                                         addPrivateParam((FieldDeclaration) child);
-                                }
-                                else if(child instanceof MethodDeclaration){
-                                    if(isPublic(child))
+                                } else if (child instanceof MethodDeclaration) {
+                                    if (isPublic(child))
                                         addPublicMethod((MethodDeclaration) child);
-                                }
-                                else if(child instanceof ConstructorDeclaration){
-
                                 }
 
                             }
@@ -112,11 +111,21 @@ public class javaparser {
             }
         }
 
-        System.out.println(sb.toString());
+        Iterator iterator = hs.iterator();      // replace private param to public if it have getter/setter
+        while(iterator.hasNext()) {
+            String temp_name = String.valueOf(iterator.next());
+            int name_index = sb.indexOf(temp_name);
+            int temp_index = name_index - 20;  // move forward index to check modifier
+            int modifier_index = sb.indexOf("private", temp_index);
+            if(modifier_index == 0)
+                continue;
 
-       FileOutputStream out = new FileOutputStream("./temp.java");
-       out.write(sb.toString().getBytes());
-       out.close();
+            sb.replace(modifier_index, modifier_index+7, "public");    // replace modifier to public
+        }
+        System.out.println(sb.toString());
+        FileOutputStream out = new FileOutputStream("./test/temp.java");
+        out.write(sb.toString().getBytes());
+        out.close();
 
     }
 
@@ -151,7 +160,13 @@ public class javaparser {
     }
 
     private void addPublicMethod(MethodDeclaration node){
-        sb.append("public " + node.getType() + " " + node.getName() + "() {};\n");
-        //System.out.println(node.getType());
+        String name = String.valueOf(node.getName());
+        if(name.startsWith("get"))                       // check Java Setters/Getters
+            hs.add(name.split("get")[1].toLowerCase());
+        else if(name.startsWith("set"))
+            hs.add(name.split("set")[1].toLowerCase());
+        else
+            sb.append("public " + node.getType() + " " + node.getName() + "() {};\n");
+            //System.out.println(node.getType());
     }
 }

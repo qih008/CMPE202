@@ -9,12 +9,14 @@
  * @hidden
  */
 
-//class UMLOptions {}
+class UMLOptions {}
 
 class TC3A{
+    public void testMethod() {};
     public String message;
     private String bark;
-    public void testMethod() {};
+
+
 }
 
 class TC3B extends TC3A{

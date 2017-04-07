@@ -7,10 +7,8 @@
  */
 class UMLOptions {}
 class ClassA{
-private String message;
+public String message;
 private String bark;
-public String getMessage() {};
-public void setMessage() {};
 public void testMethod() {};
 }
 class ClassB extends ClassA{
