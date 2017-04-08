@@ -6,11 +6,18 @@
  * @hidden
  */
 class UMLOptions {}
-class ClassA{
-public String message;
-private String bark;
-public void testMethod() {};
+/**
+  * @assoc 1 - 1 C
+ * @assoc 1 - * D
+* @assoc 1 - * B
+*/ 
+class A{
+private int x;
+private int[] y;
 }
-class ClassB extends ClassA{
-private String hello;
+class B{
+}
+class C{
+}
+class D{
 }

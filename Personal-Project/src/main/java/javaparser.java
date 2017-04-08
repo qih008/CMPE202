@@ -8,18 +8,18 @@ import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
-import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import com.github.javaparser.ast.type.*;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 public class javaparser {
 
     private StringBuilder sb = new StringBuilder();      // store intermediate code
     private HashSet<String> hs = new HashSet<String>();
+    private HashMap<String, HashMap<String, String>> assocMap = new HashMap<String, HashMap<String, String>>();
+    private List<String> assocArray = new ArrayList<String>();
 
 
     public javaparser(String path) throws IOException {
@@ -55,7 +55,7 @@ public class javaparser {
                 CompilationUnit cu = JavaParser.parse(f);
                 List<Node> nodes = cu.getChildNodes();
                 if (nodes != null) {
-                    for (Node node : nodes) {
+                    for (Node node : nodes) {                         // each node is a class or interface
                         if (node instanceof ClassOrInterfaceDeclaration) {
 
                             int relation_flat = 0;
@@ -84,34 +84,133 @@ public class javaparser {
                                 //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName());
                                 sb.append("class " + ((ClassOrInterfaceDeclaration) node).getName() + "{\n");
 
+
+                            // store temp assoc relation between class
+                            HashMap<String, String> subMap = new HashMap<String, String>();
+
                             List<Node> childNodes = node.getChildNodes();
-                            //int temp = 1;
                             for (Node child : childNodes) {
-                                //System.out.println(""+ temp++ +" "+ child);
-                                if (child instanceof FieldDeclaration) {                    //check params, methods
-                                    if (isPublic(child))
-                                        addPublicParam((FieldDeclaration) child);
-                                    else if (isPrivate(child))
-                                        addPrivateParam((FieldDeclaration) child);
-                                } else if (child instanceof MethodDeclaration) {
+
+                                //check params, methods
+                                if (child instanceof FieldDeclaration) {
+                                    // check for Collection, Class, Arrays params
+                                    if(((FieldDeclaration) child).getCommonType() instanceof ReferenceType){
+                                        //System.out.println(((FieldDeclaration) child).getCommonType());
+                                        //System.out.println(((FieldDeclaration) child).getElementType());
+
+                                        Type elementType = ((FieldDeclaration) child).getElementType();
+
+                                        // check for any array type, e.g: class[], int[], string[]
+                                        if(((FieldDeclaration) child).getCommonType().getArrayLevel() > 0){
+                                            //System.out.println(((FieldDeclaration) child).getCommonType());
+
+                                            // class[]...
+                                            if(elementType instanceof ClassOrInterfaceType){
+                                                // TODO
+
+                                            }
+                                            // int[], boolean[], string[]...
+                                            else{
+                                                if (isPublic(child))
+                                                    addPublicParam((FieldDeclaration) child);
+                                                else if (isPrivate(child))
+                                                    addPrivateParam((FieldDeclaration) child);
+                                            }
+                                        }
+                                        // for others type, e.g: class, collection
+                                        else{
+
+                                            // special check for type String
+                                            if(String.valueOf(elementType).equals("String")){
+                                                if (isPublic(child))
+                                                    addPublicParam((FieldDeclaration) child);
+                                                else if (isPrivate(child))
+                                                    addPrivateParam((FieldDeclaration) child);
+
+                                                continue;
+                                            }
+
+                                            //System.out.println(elementType.getChildNodes());
+                                            List<Node> type_child = elementType.getChildNodes();
+
+                                            // collection: assoc with *
+                                            if(type_child.size() > 0) {
+//                                                System.out.print(((ClassOrInterfaceDeclaration) node).getName());
+//                                                System.out.print(" 1 ");
+//                                                System.out.print(elementType.getChildNodes().get(0));
+//                                                System.out.println(" *");
+
+                                                if(!subMap.containsKey(String.valueOf(elementType.getChildNodes().get(0))))
+                                                    subMap.put(String.valueOf(elementType.getChildNodes().get(0)), "*");
+                                            }
+
+                                            // class: assoc with 1
+                                            else{
+//                                                System.out.print(((ClassOrInterfaceDeclaration) node).getName());
+//                                                System.out.print(" 1 ");
+//                                                System.out.print(elementType);
+//                                                System.out.println(" 1");
+
+                                                if(!subMap.containsKey(String.valueOf(elementType)))
+                                                    subMap.put(String.valueOf(elementType), "1");
+
+                                            }
+
+                                        }
+
+                                    }
+                                    // normal params (which not include String... wtf!)
+                                    else {
+                                        if (isPublic(child))
+                                            addPublicParam((FieldDeclaration) child);
+                                        else if (isPrivate(child)) {
+                                            addPrivateParam((FieldDeclaration) child);
+                                            //sb.append("-------------------------------\n");
+                                        }
+                                    }
+                                }
+                                else if (child instanceof MethodDeclaration) {
                                     if (isPublic(child))
                                         addPublicMethod((MethodDeclaration) child);
                                 }
-
                             }
-
                             sb.append("}\n");
 
+
+                            // store the printable assoc relation between classes
+                            for(Map.Entry<String, String> entry : subMap.entrySet()){
+                                HashMap<String, String> tempMap = assocMap.get(entry.getKey());
+                                if( tempMap != null){
+                                    assocArray.add(entry.getKey()+" "+entry.getValue()+" "+((ClassOrInterfaceDeclaration) node).getName()
+                                            + " "+tempMap.get(String.valueOf(((ClassOrInterfaceDeclaration) node).getName())));
+                                }
+
+                            }
+                            assocMap.put(String.valueOf(((ClassOrInterfaceDeclaration) node).getName()), subMap);
                         }
                     }
                 }
-                System.out.println("---------------------------");
+                //System.out.println("---------------------------");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
+        //System.out.println(assocArray);
 
-        Iterator iterator = hs.iterator();      // replace private param to public if it have getter/setter
+
+        // add each assoc relation to sb
+        for(String element : assocArray){
+            addAssoc(element);
+        }
+
+        // last step of javaparser
+        out_intermedia_file();
+    }
+
+    private void out_intermedia_file() throws IOException {
+
+        // replace private param to public if it have getter/setter
+        Iterator iterator = hs.iterator();
         while(iterator.hasNext()) {
             String temp_name = String.valueOf(iterator.next());
             int name_index = sb.indexOf(temp_name);
@@ -126,7 +225,6 @@ public class javaparser {
         FileOutputStream out = new FileOutputStream("./test/temp.java");
         out.write(sb.toString().getBytes());
         out.close();
-
     }
 
     private boolean isPublic(Node node){
@@ -168,5 +266,28 @@ public class javaparser {
         else
             sb.append("public " + node.getType() + " " + node.getName() + "() {};\n");
             //System.out.println(node.getType());
+    }
+
+    private void addAssoc(String in_string){
+
+        String[] temp = in_string.split(" ");
+        int class_index = sb.indexOf(temp[0]);
+
+        // check if we have multiple assoc
+        int temp_index = class_index - 30;
+        int target_index = sb.indexOf("* @assoc", temp_index);
+
+        if(target_index == -1) {
+            temp_index = class_index - 10;
+            target_index = sb.indexOf("class", temp_index);
+
+            // append umlgraph assoc format "* @assoc 1 - * B"
+            sb.insert(target_index, "/**\n" +
+                    " * @assoc "+temp[1]+" - "+temp[3]+" "+temp[2]+"\n" +
+                    "*/ \n");
+        }
+        else {
+            sb.insert(target_index, " * @assoc " + temp[1] + " - " + temp[3] + " " + temp[2] + "\n");
+        }
     }
 }

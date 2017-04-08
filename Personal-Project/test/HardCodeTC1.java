@@ -13,17 +13,15 @@
 class UMLOptions {}
 
 /**
- * @assoc "" - "\n\n 1" TC1C
- * @assoc "" - "\n\n *" TC1D
+ * @assoc 1 - 0..* TC1B
+ * @assoc 1 - 1 TC1C
+ * @assoc 1 - * TC1D
  */
 class TC1A{
     private int x;
     private int[] y;
 }
 
-/**
-*@assoc "0..*"  - "1" TC1A
-*/
 class TC1B {}
 
 class TC1C {}
