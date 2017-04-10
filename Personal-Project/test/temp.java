@@ -6,18 +6,22 @@
  * @hidden
  */
 class UMLOptions {}
-/**
-  * @assoc 1 - 1 C
- * @assoc 1 - * D
-* @assoc 1 - * B
-*/ 
-class A{
-private int x;
-private int[] y;
+class A1{
 }
-class B{
+class A2{
 }
-class C{
+class B1 extends P{
+class B1 implements A1{
 }
-class D{
+class B2 extends P{
+class B2 implements A1{
+class B2 implements A2{
+}
+class C1{
+public void test() {};
+}
+class C2{
+public void test() {};
+}
+class P{
 }

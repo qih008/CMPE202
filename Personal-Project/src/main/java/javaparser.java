@@ -159,7 +159,7 @@ public class javaparser {
                                         }
 
                                     }
-                                    // normal params (which not include String... wtf!)
+                                    // normal params (which not include String...)
                                     else {
                                         if (isPublic(child))
                                             addPublicParam((FieldDeclaration) child);
