@@ -2,34 +2,40 @@
  * @opt attributes
  * @opt operations
  * @opt visibility
+ * @opt constructors
  * @opt types
  * @hidden
  */
 class UMLOptions {}
-class ConcreteObserver implements Observer{
-public void update() {};
-public void showState() {};
+interface Component{
+public String operation() {};
 }
-class ConcreteSubject implements Subject{
-public String subjectState;
-public void attach(Observer obj) {};
-public void detach(Observer obj) {};
-public void notifyObservers() {};
-public void showState() {};
+class ConcreteComponent implements Component{
+public String operation() {};
 }
-interface Observer{
-public void update() {};
+/**
+ * @depend - - - Component
+*/ 
+class ConcreteDecoratorA extends Decorator{
+private String addedState;
+public ConcreteDecoratorA(Component c) {};
+public String operation() {};
 }
-class Optimist extends ConcreteObserver{
-public void update() {};
+/**
+ * @depend - - - Component
+*/ 
+class ConcreteDecoratorB extends Decorator{
+private String addedState;
+public ConcreteDecoratorB(Component c) {};
+public String operation() {};
 }
-class Pessimist extends ConcreteObserver{
-public void update() {};
+/**
+ * @depend - - - Component
+*/ 
+class Decorator implements Component{
+public Decorator(Component c) {};
+public String operation() {};
 }
-interface Subject{
-public void attach(Observer obj) {};
-public void detach(Observer obj) {};
-public void notifyObservers() {};
-}
-class TheEconomy extends ConcreteSubject{
+class Tester{
+public void main(String[] args) {};
 }

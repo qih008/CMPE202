@@ -27,6 +27,7 @@ public class javaparser {
                 " * @opt attributes\n" +
                 " * @opt operations\n" +
                 " * @opt visibility\n" +
+                " * @opt constructors\n" +
                 " * @opt types\n" +
                 " * @hidden\n" +
                 " */\n" +
@@ -205,8 +206,15 @@ public class javaparser {
                                     }
                                 }
                                 else if (child instanceof MethodDeclaration) {
-                                    if (isPublic(child))
+                                    if (isPublic(child)) {
                                         addPublicMethod((MethodDeclaration) child);
+                                    }
+                                }
+                                else if (child instanceof ConstructorDeclaration){
+                                    if (isPublic(child)) {
+                                        //System.out.println(((ConstructorDeclaration) child).getName());
+                                        addPublicConstructor((ConstructorDeclaration) child);
+                                    }
                                 }
                             }
                             sb.append("}\n");
@@ -294,6 +302,7 @@ public class javaparser {
 
     private void addPublicMethod(MethodDeclaration node){
         String name = String.valueOf(node.getName());
+
         if(name.startsWith("get"))                       // check Java Setters/Getters
             hs.add(name.split("get")[1].toLowerCase());
         else if(name.startsWith("set"))
@@ -320,15 +329,17 @@ public class javaparser {
                 // check interface dependency
                 if (param.getType() instanceof ClassOrInterfaceType) {
                     if(first_depen == 0) {
-                        //System.out.println(param.getType());
-                        int name_index = sb.lastIndexOf(String.valueOf(node.getName()));
-                        int temp_index = name_index - 30;
-                        int target_index = sb.indexOf("class", temp_index);
+                        //System.out.println(node.getName() + " " + param.getType());
+                        //int name_index = sb.lastIndexOf(String.valueOf(node.getName()));
+                        //int temp_index = name_index - 30;
+                        int class_index = sb.lastIndexOf("class");
+                        int interface_index = sb.lastIndexOf("interface");
+                        int target_index = Math.max(class_index, interface_index);
                         if(target_index == -1)
                             continue;
 
                         sb.insert(target_index, "/**\n" +
-                                " * @depend "+"- <uses> - " + param.getType() + "\n" +
+                                " * @depend "+"- - - " + param.getType() + "\n" +
                                 "*/ \n");
 
                         first_depen = 1;
@@ -341,12 +352,70 @@ public class javaparser {
 
             sb.append(") {};\n");
         }
+
+        // check attributes inside method
+//        List<Node> children = node.getChildNodes();
+//        for(Node child : children){
+//            if(child instanceof FieldDeclaration)
+//                System.out.println(child);
+//        }
+
+    }
+
+    private void addPublicConstructor(ConstructorDeclaration node){
+
+
+        sb.append("public " + node.getName() + "(");
+
+        // check function's params
+        List<Parameter> params = node.getParameters();
+
+        int first_depen = 0;
+        for(int i = 0; i < params.size(); i++){
+            Parameter param = params.get(i);
+            // add params to stringbuilder
+            if(i == 0){
+                sb.append(param.getType() + " " + param.getName() );
+            }
+            else{
+                sb.append(", " + param.getType() + " " + param.getName());
+            }
+
+            // check interface dependency
+            if (param.getType() instanceof ClassOrInterfaceType) {
+                if(first_depen == 0) {
+                    //System.out.println(node.getName() + " " + param.getType());
+                    //int name_index = sb.lastIndexOf(String.valueOf(node.getName()));
+                    //int temp_index = name_index - 30;
+                    int class_index = sb.lastIndexOf("class");
+                    int interface_index = sb.lastIndexOf("interface");
+                    int target_index = Math.max(class_index, interface_index);
+                    if(target_index == -1)
+                        continue;
+
+                    sb.insert(target_index, "/**\n" +
+                            " * @depend "+"- - - " + param.getType() + "\n" +
+                            "*/ \n");
+
+                    first_depen = 1;
+                }
+                else{
+                    // TODO handle multiple dependency for one class
+                }
+            }
+        }
+
+        sb.append(") {};\n");
     }
 
     private void addAssoc(String in_string){
 
         String[] temp = in_string.split(" ");
         int class_index = sb.indexOf(temp[0]);
+
+        //System.out.println(temp[0] +" "+ temp[1] +" "+ temp[2] +" "+ temp[3]);
+        if(temp[3].equals("null") || temp[1].equals("null"))
+            return;
 
         // check if we have multiple assoc
         int temp_index = class_index - 30;
