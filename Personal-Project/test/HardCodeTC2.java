@@ -20,17 +20,17 @@ class B2 extends P implements A1, A2{
 
 }
 /**
- * @depend - - - A1
+ * @depend - <uses> - A1
  */
 class C1{
-    public void test() {};
+    public void test(A1 a1) {};
 }
 
 /**
- * @depend - - - A2
+ * @depend - <uses> - A2
  */
 class C2{
-    public void test() {};
+    public void test(A2 a2) {};
 }
 
 class P{

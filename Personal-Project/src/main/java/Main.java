@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        new javaparser("/Users/qing/Desktop/CMPE202/Tests/uml-parser-test-2");
+        new javaparser("/Users/qing/Desktop/CMPE202/Tests/uml-parser-test-4");
         //new javaparser("/Users/qing/Desktop/CMPE202/Personal-Project/temp_test");
     }
 }

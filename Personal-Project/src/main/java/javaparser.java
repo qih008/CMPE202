@@ -2,11 +2,9 @@
  * Created by qhuang on 3/4/17.
  */
 import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.type.*;
 
@@ -58,31 +56,68 @@ public class javaparser {
                     for (Node node : nodes) {                         // each node is a class or interface
                         if (node instanceof ClassOrInterfaceDeclaration) {
 
-                            int relation_flat = 0;
+                            //int relation_flat = 0;
+                            String class_or_interface = "";
+
+                            // check class or interface
+                            if(((ClassOrInterfaceDeclaration) node).isInterface())
+                                class_or_interface = "interface ";
+                            else
+                                class_or_interface = "class ";
 
                             // check extension
                             List<ClassOrInterfaceType> extendeds = ((ClassOrInterfaceDeclaration) node).getExtendedTypes();
-                            if (extendeds != null) {
-                                for (ClassOrInterfaceType classtype : extendeds) {
-                                    //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName()+" extends " + classtype);
-                                    sb.append("class " + ((ClassOrInterfaceDeclaration) node).getName() + " extends " + classtype + "{\n");
-                                    relation_flat = 1;
-                                }
-                            }
-
                             // check implementation
                             List<ClassOrInterfaceType> implementeds = ((ClassOrInterfaceDeclaration) node).getImplementedTypes();
-                            if (implementeds != null) {
-                                for (ClassOrInterfaceType classtype : implementeds) {
-                                    //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName()+" implements " + classtype);
-                                    sb.append("class " + ((ClassOrInterfaceDeclaration) node).getName() + " implements " + classtype + "{\n");
-                                    relation_flat = 1;
+
+                            //System.out.println("extendeds " + extendeds.size() + " implementeds " + implementeds.size());
+
+                            if((extendeds.size() != 0) && (implementeds.size() == 0)){
+                                for (ClassOrInterfaceType classtype : extendeds) {
+                                    //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName()+" extends " + classtype);
+                                    sb.append(class_or_interface + ((ClassOrInterfaceDeclaration) node).getName() + " extends " + classtype + "{\n");
+                                    //relation_flat = 1;
                                 }
                             }
+                            else if((implementeds.size() != 0) && (extendeds.size() == 0)) {
+//                                for (ClassOrInterfaceType classtype : implementeds) {
+//                                    //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName()+" implements " + classtype);
+//                                    sb.append(class_or_interface + ((ClassOrInterfaceDeclaration) node).getName() + " implements " + classtype + "{\n");
+//                                    //relation_flat = 1;
+//                                }
+                                for(int i = 0; i < implementeds.size(); i++){
+                                    if(i == 0){
+                                        sb.append(class_or_interface + ((ClassOrInterfaceDeclaration) node).getName() + " implements " + implementeds.get(i));
+                                    }
+                                    else{
+                                        sb.append(", " + implementeds.get(i));
+                                    }
+                                }
+                                sb.append("{\n");
+                            }
+                            else if((extendeds.size() != 0) && (implementeds.size() != 0)){
+                                for (ClassOrInterfaceType classtype : extendeds) {
+                                    sb.append(class_or_interface + ((ClassOrInterfaceDeclaration) node).getName() + " extends " + classtype);
 
-                            if (relation_flat == 0)
+                                }
+//                                for (ClassOrInterfaceType classtype : implementeds) {
+//                                    sb.append(" implements " + classtype);
+//                                }
+                                for(int i = 0; i < implementeds.size(); i++){
+                                    if(i == 0){
+                                        sb.append(" implements " + implementeds.get(i));
+                                    }
+                                    else{
+                                        sb.append(", " + implementeds.get(i));
+                                    }
+                                }
+                                sb.append("{\n");
+                                //relation_flat = 1;
+                            }
+                            else{
                                 //System.out.println("class "+((ClassOrInterfaceDeclaration) node).getName());
-                                sb.append("class " + ((ClassOrInterfaceDeclaration) node).getName() + "{\n");
+                                sb.append(class_or_interface + ((ClassOrInterfaceDeclaration) node).getName() + "{\n");
+                            }
 
 
                             // store temp assoc relation between class
@@ -91,9 +126,9 @@ public class javaparser {
                             List<Node> childNodes = node.getChildNodes();
                             for (Node child : childNodes) {
 
-                                //check params, methods
+                                //check Attributes, methods
                                 if (child instanceof FieldDeclaration) {
-                                    // check for Collection, Class, Arrays params
+                                    // check for Collection, Class, Arrays Attributes
                                     if(((FieldDeclaration) child).getCommonType() instanceof ReferenceType){
                                         //System.out.println(((FieldDeclaration) child).getCommonType());
                                         //System.out.println(((FieldDeclaration) child).getElementType());
@@ -112,9 +147,9 @@ public class javaparser {
                                             // int[], boolean[], string[]...
                                             else{
                                                 if (isPublic(child))
-                                                    addPublicParam((FieldDeclaration) child);
+                                                    addPublicAttribute((FieldDeclaration) child);
                                                 else if (isPrivate(child))
-                                                    addPrivateParam((FieldDeclaration) child);
+                                                    addPrivateAttribute((FieldDeclaration) child);
                                             }
                                         }
                                         // for others type, e.g: class, collection
@@ -123,9 +158,9 @@ public class javaparser {
                                             // special check for type String
                                             if(String.valueOf(elementType).equals("String")){
                                                 if (isPublic(child))
-                                                    addPublicParam((FieldDeclaration) child);
+                                                    addPublicAttribute((FieldDeclaration) child);
                                                 else if (isPrivate(child))
-                                                    addPrivateParam((FieldDeclaration) child);
+                                                    addPrivateAttribute((FieldDeclaration) child);
 
                                                 continue;
                                             }
@@ -159,12 +194,12 @@ public class javaparser {
                                         }
 
                                     }
-                                    // normal params (which not include String...)
+                                    // normal Attributes (which not include String...)
                                     else {
                                         if (isPublic(child))
-                                            addPublicParam((FieldDeclaration) child);
+                                            addPublicAttribute((FieldDeclaration) child);
                                         else if (isPrivate(child)) {
-                                            addPrivateParam((FieldDeclaration) child);
+                                            addPrivateAttribute((FieldDeclaration) child);
                                             //sb.append("-------------------------------\n");
                                         }
                                     }
@@ -209,7 +244,7 @@ public class javaparser {
 
     private void out_intermedia_file() throws IOException {
 
-        // replace private param to public if it have getter/setter
+        // replace private Attribute to public if it have getter/setter
         Iterator iterator = hs.iterator();
         while(iterator.hasNext()) {
             String temp_name = String.valueOf(iterator.next());
@@ -249,11 +284,11 @@ public class javaparser {
             return false;
     }
 
-    private void addPublicParam(FieldDeclaration node){
+    private void addPublicAttribute(FieldDeclaration node){
         sb.append("public " + node.getCommonType() + " " + node.getVariables().get(0).getName() + ";\n");
     }
 
-    private void addPrivateParam(FieldDeclaration node){
+    private void addPrivateAttribute(FieldDeclaration node){
         sb.append("private " + node.getCommonType() + " " + node.getVariables().get(0).getName() + ";\n");
     }
 
@@ -263,9 +298,49 @@ public class javaparser {
             hs.add(name.split("get")[1].toLowerCase());
         else if(name.startsWith("set"))
             hs.add(name.split("set")[1].toLowerCase());
-        else
-            sb.append("public " + node.getType() + " " + node.getName() + "() {};\n");
-            //System.out.println(node.getType());
+        else {
+
+            sb.append("public " + node.getType() + " " + node.getName() + "(");
+
+            // check function's params
+            List<Parameter> params = node.getParameters();
+
+            int first_depen = 0;
+            for(int i = 0; i < params.size(); i++){
+                Parameter param = params.get(i);
+
+                // add params to stringbuilder
+                if(i == 0){
+                    sb.append(param.getType() + " " + param.getName() );
+                }
+                else{
+                    sb.append(", " + param.getType() + " " + param.getName());
+                }
+
+                // check interface dependency
+                if (param.getType() instanceof ClassOrInterfaceType) {
+                    if(first_depen == 0) {
+                        //System.out.println(param.getType());
+                        int name_index = sb.lastIndexOf(String.valueOf(node.getName()));
+                        int temp_index = name_index - 30;
+                        int target_index = sb.indexOf("class", temp_index);
+                        if(target_index == -1)
+                            continue;
+
+                        sb.insert(target_index, "/**\n" +
+                                " * @depend "+"- <uses> - " + param.getType() + "\n" +
+                                "*/ \n");
+
+                        first_depen = 1;
+                    }
+                    else{
+                        // TODO handle multiple dependency for one class
+                    }
+                }
+            }
+
+            sb.append(") {};\n");
+        }
     }
 
     private void addAssoc(String in_string){

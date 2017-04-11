@@ -6,22 +6,30 @@
  * @hidden
  */
 class UMLOptions {}
-class A1{
+class ConcreteObserver implements Observer{
+public void update() {};
+public void showState() {};
 }
-class A2{
+class ConcreteSubject implements Subject{
+public String subjectState;
+public void attach(Observer obj) {};
+public void detach(Observer obj) {};
+public void notifyObservers() {};
+public void showState() {};
 }
-class B1 extends P{
-class B1 implements A1{
+interface Observer{
+public void update() {};
 }
-class B2 extends P{
-class B2 implements A1{
-class B2 implements A2{
+class Optimist extends ConcreteObserver{
+public void update() {};
 }
-class C1{
-public void test() {};
+class Pessimist extends ConcreteObserver{
+public void update() {};
 }
-class C2{
-public void test() {};
+interface Subject{
+public void attach(Observer obj) {};
+public void detach(Observer obj) {};
+public void notifyObservers() {};
 }
-class P{
+class TheEconomy extends ConcreteSubject{
 }
