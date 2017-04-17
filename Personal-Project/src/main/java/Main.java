@@ -5,9 +5,10 @@ import java.io.IOException;
  */
 public class Main {
 
+    // main class to call javaparser
     public static void main(String[] args) throws IOException {
-    	//System.out.println("Hello world");
-        new javaparser("/Users/qing/Desktop/CMPE202/Tests/uml-parser-test-5");
-        //new javaparser("/Users/qing/Desktop/CMPE202/Personal-Project/temp_test");
+    	  //System.out.println(""+args.length+" "+args[0] + " " + args[1]);
+        //new javaparser("/Users/qing/Desktop/CMPE202/Tests/uml-parser-test-5");
+        new javaparser(args[0], args[1]);
     }
 }

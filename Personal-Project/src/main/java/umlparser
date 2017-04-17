@@ -2,13 +2,18 @@
 if [ "$#" -ne 2 ] || ! [ -d "$1" ]; then
   echo "Usage: umlparser <source folder> <output file name>"
   echo "Example: umlparser uml-parser-test-3 output.png"
+else
+  IN="$1"
+  OUT="$2"
+  arrOUT=(${OUT//./ })
+  #echo "$1" "$2"
+  #echo "$IN" "$OUT"
+  #echo "${arrOUT[0]}" "${arrOUT[1]}"
+  # /Users/qing/Desktop/CMPE202/Tests/uml-parser-test-5
+  javac -cp "./javaparser-core-3.0.1.jar" ./*.java
+  java -cp .:javaparser-core-3.0.1.jar Main "$IN" "${arrOUT[0]}"
+  umlgraph "${arrOUT[0]}" "${arrOUT[1]}"
 fi
 
-IN="$1"
-OUT="$2"
 
 
-echo "$IN" "$OUT"
-
-javac -cp "./javaparser-core-3.0.1.jar" ./*.java
-java -cp .:javaparser-core-3.0.1.jar Main

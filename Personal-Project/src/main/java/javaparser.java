@@ -20,7 +20,7 @@ public class javaparser {
     private List<String> assocArray = new ArrayList<String>();
 
 
-    public javaparser(String path) throws IOException {
+    public javaparser(String path, String outfile) throws IOException {
 
         // init umlgraph format
         sb.append("/**\n" +
@@ -247,10 +247,10 @@ public class javaparser {
         }
 
         // last step of javaparser
-        out_intermedia_file();
+        out_intermedia_file(outfile);
     }
 
-    private void out_intermedia_file() throws IOException {
+    private void out_intermedia_file(String outfile) throws IOException {
 
         // replace private Attribute to public if it have getter/setter
         Iterator iterator = hs.iterator();
@@ -264,8 +264,8 @@ public class javaparser {
 
             sb.replace(modifier_index, modifier_index+7, "public");    // replace modifier to public
         }
-        System.out.println(sb.toString());
-        FileOutputStream out = new FileOutputStream("./test/temp.java");
+        //System.out.println(sb.toString());
+        FileOutputStream out = new FileOutputStream("./" + outfile + ".java");
         out.write(sb.toString().getBytes());
         out.close();
     }
