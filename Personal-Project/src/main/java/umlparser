@@ -10,3 +10,5 @@ OUT="$2"
 
 echo "$IN" "$OUT"
 
+javac -cp "./javaparser-core-3.0.1.jar" ./*.java
+java -cp .:javaparser-core-3.0.1.jar Main
