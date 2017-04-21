@@ -9,7 +9,7 @@ else
   #echo "$1" "$2"
   #echo "$IN" "$OUT"
   #echo "${arrOUT[0]}" "${arrOUT[1]}"
-  # /Users/qing/Desktop/CMPE202/Tests/uml-parser-test-5
+  # umlparser /Users/qing/Desktop/CMPE202/Tests/uml-parser-test-5 output.png
   javac -cp "./javaparser-core-3.0.1.jar" ./*.java
   java -cp .:javaparser-core-3.0.1.jar Main "$IN" "${arrOUT[0]}"
   umlgraph "${arrOUT[0]}" "${arrOUT[1]}"
