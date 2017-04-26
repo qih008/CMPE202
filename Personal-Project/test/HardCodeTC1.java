@@ -12,6 +12,14 @@
 
 class UMLOptions {}
 
+
+
+class TC1B {}
+
+class TC1C {}
+
+class TC1D {}
+
 /**
  * @assoc 1 - 0..* TC1B
  * @assoc 1 - 1 TC1C
@@ -21,11 +29,4 @@ class TC1A{
     private int x;
     private int[] y;
 }
-
-class TC1B {}
-
-class TC1C {}
-
-class TC1D {}
-
 

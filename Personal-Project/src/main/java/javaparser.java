@@ -411,7 +411,7 @@ public class javaparser {
     private void addAssoc(String in_string){
 
         String[] temp = in_string.split(" ");
-        int class_index = sb.indexOf(temp[0]);
+        int class_index = sb.lastIndexOf(temp[0]);
 
         //System.out.println(temp[0] +" "+ temp[1] +" "+ temp[2] +" "+ temp[3]);
         if(temp[3].equals("null") || temp[1].equals("null"))
@@ -420,8 +420,9 @@ public class javaparser {
         // check if we have multiple assoc
         int temp_index = class_index - 30;
         int target_index = sb.indexOf("* @assoc", temp_index);
+        //System.out.println(target_index);
 
-        if(target_index == -1) {
+        if((target_index == -1) || (target_index > class_index)){
             temp_index = class_index - 10;
             target_index = sb.indexOf("class", temp_index);
 
