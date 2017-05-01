@@ -147,8 +147,10 @@ public class javaparser {
                                             }
                                             // int[], boolean[], string[]...
                                             else{
-                                                if (isPublic(child))
+                                                if (isPublic(child)) {
+                                                    //System.out.println(((FieldDeclaration) child).getModifiers());
                                                     addPublicAttribute((FieldDeclaration) child);
+                                                }
                                                 else if (isPrivate(child))
                                                     addPrivateAttribute((FieldDeclaration) child);
                                             }
@@ -158,8 +160,10 @@ public class javaparser {
 
                                             // special check for type String
                                             if(String.valueOf(elementType).equals("String")){
-                                                if (isPublic(child))
+                                                if (isPublic(child)){
+                                                    //System.out.println(((FieldDeclaration) child).getModifiers());
                                                     addPublicAttribute((FieldDeclaration) child);
+                                                }
                                                 else if (isPrivate(child))
                                                     addPrivateAttribute((FieldDeclaration) child);
 
@@ -197,8 +201,10 @@ public class javaparser {
                                     }
                                     // normal Attributes (which not include String...)
                                     else {
-                                        if (isPublic(child))
+                                        if (isPublic(child)) {
+                                            //System.out.println(((FieldDeclaration) child).getModifiers());
                                             addPublicAttribute((FieldDeclaration) child);
+                                        }
                                         else if (isPrivate(child)) {
                                             addPrivateAttribute((FieldDeclaration) child);
                                             //sb.append("-------------------------------\n");
